@@ -35,7 +35,7 @@ session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
 ```
 [View in Source](x-source-tag://ARReferenceImage-Loading)
 
-[1]:https://developer.apple.com/documentation/arkit/building_your_first_ar_experience
+[1]:https://developer.apple.com/documentation/arkit/tracking_and_visualizing_planes
 [2]:https://developer.apple.com/documentation/arkit/arreferenceimage
 [3]:https://developer.apple.com/documentation/arkit/arworldtrackingconfiguration/2941063-detectionimages
 [4]:https://developer.apple.com/documentation/arkit/arsession/2875735-run
