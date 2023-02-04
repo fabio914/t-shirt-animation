@@ -71,9 +71,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
             fatalError("Missing expected asset catalog resources.")
         }
-        
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.detectionImages = referenceImages
+
+        let configuration = ARImageTrackingConfiguration()
+        configuration.trackingImages = referenceImages
+        configuration.maximumNumberOfTrackedImages = 1
         session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
 
         statusViewController.scheduleMessage("Look around to detect images", inSeconds: 7.5, messageType: .contentPlacement)
@@ -89,8 +90,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             // Create a plane to visualize the initial position of the detected image.
             let plane = SCNPlane(width: referenceImage.physicalSize.width,
                                  height: referenceImage.physicalSize.height)
+            let planeMaterial = SCNMaterial()
+            planeMaterial.lightingModel = .constant
+            planeMaterial.diffuse.contents = UIColor(white: 1, alpha: 0)
+            plane.firstMaterial = planeMaterial
+
             let planeNode = SCNNode(geometry: plane)
-            planeNode.opacity = 0.25
             
             /*
              `SCNPlane` is vertically oriented in its local coordinate space, but
@@ -98,13 +103,103 @@ class ViewController: UIViewController, ARSCNViewDelegate {
              rotate the plane to match.
              */
             planeNode.eulerAngles.x = -.pi / 2
-            
-            /*
-             Image anchors are not tracked after initial detection, so create an
-             animation that limits the duration for which the plane visualization appears.
-             */
-            planeNode.runAction(self.imageHighlightAction)
-            
+
+
+            // Smoke
+
+            let initialSmokeOpacity = 0.9
+
+            let smokePlane = SCNPlane(
+                width: 0.55 * referenceImage.physicalSize.width,
+                height: 0.55 * referenceImage.physicalSize.height
+            )
+
+            let smokeMaterial = SCNMaterial()
+            smokeMaterial.lightingModel = .constant
+            smokeMaterial.diffuse.contents = UIImage(named: "smoke")
+            smokePlane.firstMaterial = smokeMaterial
+
+            // Actions
+
+            let smokeInitialPosition = SCNVector3(
+                x: Float(CGFloat(0.25) * referenceImage.physicalSize.width),
+                y: Float(CGFloat(-0.11) * referenceImage.physicalSize.height),
+                z: 0.05
+            )
+
+            let fadeInAction = SCNAction.fadeOpacity(to: initialSmokeOpacity, duration: 0.25)
+
+            let leftAction = SCNAction.group([
+                .fadeOpacity(by: -0.10, duration: 0.25),
+                .moveBy(
+                    x: CGFloat(-0.20) * referenceImage.physicalSize.width,
+                    y: CGFloat(0.35) * referenceImage.physicalSize.height,
+                    z: 0.1,
+                    duration: 0.25
+                ),
+                .scale(by: 1.25, duration: 0.25),
+                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
+            ])
+
+            let rightAction = SCNAction.group([
+                .fadeOpacity(by: -0.10, duration: 0.25),
+                .moveBy(
+                    x: CGFloat(0.20) * referenceImage.physicalSize.width,
+                    y: CGFloat(0.35) * referenceImage.physicalSize.height,
+                    z: 0.1,
+                    duration: 0.25
+                ),
+                .scale(by: 1.25, duration: 0.25),
+                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
+            ])
+
+            let leftFadeOutAction = SCNAction.group([
+                .fadeOpacity(to: 0, duration: 0.25),
+                .moveBy(
+                    x: CGFloat(-0.20) * referenceImage.physicalSize.width,
+                    y: CGFloat(0.25) * referenceImage.physicalSize.height,
+                    z: 0.1,
+                    duration: 0.25
+                ),
+                .scale(by: 1.25, duration: 0.25),
+                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
+            ])
+
+            let resetAction = SCNAction.group([
+                .move(to: smokeInitialPosition, duration: 0),
+                .scale(to: 1, duration: 0),
+                .rotateTo(x: 0, y: 0, z: 0, duration: 0),
+                .fadeOpacity(to: 0, duration: 0)
+            ])
+
+            let repeatingSequence = SCNAction.repeatForever(
+                .sequence([
+                    fadeInAction,
+                    rightAction,
+                    leftAction,
+                    rightAction,
+                    leftAction,
+                    rightAction,
+                    leftFadeOutAction,
+                    resetAction
+                ])
+            )
+
+            // Additional smoke
+
+            for i in 0 ..< 7 {
+                let moreSmokePlaneNode = SCNNode(geometry: smokePlane)
+                moreSmokePlaneNode.position = smokeInitialPosition
+                moreSmokePlaneNode.opacity = 0
+
+                moreSmokePlaneNode.runAction(.sequence([
+                    .wait(duration: 0.25 * Double(i)),
+                    repeatingSequence
+                ]))
+
+                planeNode.addChildNode(moreSmokePlaneNode)
+            }
+
             // Add the plane visualization to the scene.
             node.addChildNode(planeNode)
         }
@@ -114,16 +209,5 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.statusViewController.cancelAllScheduledMessages()
             self.statusViewController.showMessage("Detected image “\(imageName)”")
         }
-    }
-
-    var imageHighlightAction: SCNAction {
-        return .sequence([
-            .wait(duration: 0.25),
-            .fadeOpacity(to: 0.85, duration: 0.25),
-            .fadeOpacity(to: 0.15, duration: 0.25),
-            .fadeOpacity(to: 0.85, duration: 0.25),
-            .fadeOut(duration: 0.5),
-            .removeFromParentNode()
-        ])
     }
 }
