@@ -124,7 +124,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let smokeInitialPosition = SCNVector3(
                 x: Float(CGFloat(0.25) * referenceImage.physicalSize.width),
                 y: Float(CGFloat(-0.11) * referenceImage.physicalSize.height),
-                z: 0.05
+                z: 0
             )
 
             let fadeInAction = SCNAction.fadeOpacity(to: initialSmokeOpacity, duration: 0.25)
@@ -133,8 +133,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 .fadeOpacity(by: -0.10, duration: 0.25),
                 .moveBy(
                     x: CGFloat(-0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.35) * referenceImage.physicalSize.height,
-                    z: 0.1,
+                    y: CGFloat(0.5) * referenceImage.physicalSize.height,
+                    z: 0.01,
                     duration: 0.25
                 ),
                 .scale(by: 1.25, duration: 0.25),
@@ -145,8 +145,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 .fadeOpacity(by: -0.10, duration: 0.25),
                 .moveBy(
                     x: CGFloat(0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.35) * referenceImage.physicalSize.height,
-                    z: 0.1,
+                    y: CGFloat(0.5) * referenceImage.physicalSize.height,
+                    z: 0.01,
                     duration: 0.25
                 ),
                 .scale(by: 1.25, duration: 0.25),
@@ -157,8 +157,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 .fadeOpacity(to: 0, duration: 0.25),
                 .moveBy(
                     x: CGFloat(-0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.25) * referenceImage.physicalSize.height,
-                    z: 0.1,
+                    y: CGFloat(0.5) * referenceImage.physicalSize.height,
+                    z: 0.01,
                     duration: 0.25
                 ),
                 .scale(by: 1.25, duration: 0.25),
