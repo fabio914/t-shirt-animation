@@ -86,24 +86,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
         let referenceImage = imageAnchor.referenceImage
         updateQueue.async {
-            
-            // Create a plane to visualize the initial position of the detected image.
-            let plane = SCNPlane(width: referenceImage.physicalSize.width,
-                                 height: referenceImage.physicalSize.height)
-            let planeMaterial = SCNMaterial()
-            planeMaterial.lightingModel = .constant
-            planeMaterial.diffuse.contents = UIColor(white: 1, alpha: 0)
-            plane.firstMaterial = planeMaterial
 
-            let planeNode = SCNNode(geometry: plane)
-            
-            /*
-             `SCNPlane` is vertically oriented in its local coordinate space, but
-             `ARImageAnchor` assumes the image is horizontal in its local space, so
-             rotate the plane to match.
-             */
-            planeNode.eulerAngles.x = -.pi / 2
-
+            let imagePlaneNode = SCNNode()
+            imagePlaneNode.eulerAngles.x = -.pi / 2
 
             // Smoke
 
@@ -133,7 +118,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 .fadeOpacity(by: -0.10, duration: 0.25),
                 .moveBy(
                     x: CGFloat(-0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.5) * referenceImage.physicalSize.height,
+                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
                     z: 0.01,
                     duration: 0.25
                 ),
@@ -145,7 +130,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 .fadeOpacity(by: -0.10, duration: 0.25),
                 .moveBy(
                     x: CGFloat(0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.5) * referenceImage.physicalSize.height,
+                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
                     z: 0.01,
                     duration: 0.25
                 ),
@@ -157,7 +142,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 .fadeOpacity(to: 0, duration: 0.25),
                 .moveBy(
                     x: CGFloat(-0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.5) * referenceImage.physicalSize.height,
+                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
                     z: 0.01,
                     duration: 0.25
                 ),
@@ -197,11 +182,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     repeatingSequence
                 ]))
 
-                planeNode.addChildNode(moreSmokePlaneNode)
+                imagePlaneNode.addChildNode(moreSmokePlaneNode)
             }
 
             // Add the plane visualization to the scene.
-            node.addChildNode(planeNode)
+            node.addChildNode(imagePlaneNode)
         }
 
         DispatchQueue.main.async {
