@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playground target-platform="ios" version="6.0" requires-full-environment="false">
+    <pages>
+        <page name="Animated T-shirt"/>
+    </pages>
+</playground>
