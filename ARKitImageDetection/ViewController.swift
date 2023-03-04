@@ -163,39 +163,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                         .repeatForever(
                             .sequence([
                                 .wait(duration: baseUnit),
-                                .wait(duration: Double(i - 1) * baseUnit),
                                 .fadeOpacity(to: 1, duration: baseUnit),
-                                .wait(duration: Double(4 - i) * baseUnit),
+                                .wait(duration: 3.0 * baseUnit),
                                 .fadeOpacity(to: 0, duration: baseUnit),
                             ])
                         ),
-                        .repeatForever(
-                            .sequence([
-                                .move(to: finalPosition, duration: baseUnit),
-                                .move(to: initialPosition, duration: baseUnit)
-                            ])
-                        )
-
+                        .sequence([
+                            .wait(duration: baseUnit, withRange: baseUnit),
+                            .repeatForever(
+                                .sequence([
+                                    .move(to: finalPosition, duration: baseUnit),
+                                    .move(to: initialPosition, duration: baseUnit)
+                                ])
+                            )
+                        ])
                     ])
                 )
-
-//                node.runAction(
-//                    .repeatForever(
-//                        .sequence([
-//                            .wait(duration: baseUnit),
-//                            .wait(duration: Double(i - 1) * baseUnit),
-//                            .group([
-//                                .fadeOpacity(to: 1, duration: baseUnit),
-//                                .move(to: finalPosition, duration: baseUnit)
-//                            ]),
-//                            .wait(duration: Double(4 - i) * baseUnit),
-//                            .group([
-//                                .fadeOpacity(to: 0, duration: baseUnit),
-//                                .move(to: initialPosition, duration: baseUnit)
-//                            ]),
-//                        ])
-//                    )
-//                )
 
                 imagePlaneNode.addChildNode(node)
 
