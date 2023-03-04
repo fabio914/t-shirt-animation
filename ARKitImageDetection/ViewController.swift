@@ -129,6 +129,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
             forkNode.runAction(
                 .repeatForever(.sequence([
+                    .wait(duration: baseUnit),
                     .move(to: forkFinalPosition, duration: baseUnit),
                     .wait(duration: 4.0 * baseUnit),
                     .move(to: forkInitialPosition, duration: baseUnit)
@@ -152,7 +153,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 nodePlane.firstMaterial = nodeMaterial
 
                 let initialPosition = SCNVector3(x: 0, y: 0, z: 0.01)
-                let finalPosition = SCNVector3(x: 0, y: 0, z: 0.05)
+                let finalPosition = SCNVector3(x: 0, y: 0, z: 0.04)
 
                 let node = SCNNode(geometry: nodePlane)
                 node.position = initialPosition
@@ -162,7 +163,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                     .group([
                         .repeatForever(
                             .sequence([
-                                .wait(duration: baseUnit),
+                                .wait(duration: 2.0 * baseUnit),
                                 .fadeOpacity(to: 1, duration: baseUnit),
                                 .wait(duration: 3.0 * baseUnit),
                                 .fadeOpacity(to: 0, duration: baseUnit),
@@ -172,8 +173,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                             .wait(duration: baseUnit, withRange: baseUnit),
                             .repeatForever(
                                 .sequence([
-                                    .move(to: finalPosition, duration: baseUnit),
-                                    .move(to: initialPosition, duration: baseUnit)
+                                    .move(to: finalPosition, duration: 0.5 * baseUnit),
+                                    .move(to: initialPosition, duration: 0.5 * baseUnit)
                                 ])
                             )
                         ])
