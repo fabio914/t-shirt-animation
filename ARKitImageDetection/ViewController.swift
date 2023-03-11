@@ -90,99 +90,99 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let imagePlaneNode = SCNNode()
             imagePlaneNode.eulerAngles.x = -.pi / 2
 
-            // Smoke
+            // Background
 
-            let initialSmokeOpacity = 0.9
-
-            let smokePlane = SCNPlane(
-                width: 0.55 * referenceImage.physicalSize.width,
-                height: 0.55 * referenceImage.physicalSize.height
+            let backgroundPlane = SCNPlane(
+                width: referenceImage.physicalSize.width,
+                height: referenceImage.physicalSize.height
             )
 
-            let smokeMaterial = SCNMaterial()
-            smokeMaterial.lightingModel = .constant
-            smokeMaterial.diffuse.contents = UIImage(named: "smoke")
-            smokePlane.firstMaterial = smokeMaterial
+            let backgroundMaterial = SCNMaterial()
+            backgroundMaterial.lightingModel = .constant
+            backgroundMaterial.diffuse.contents = UIImage(named: "background")
+            backgroundPlane.firstMaterial = backgroundMaterial
 
-            // Actions
+            let backgroundPlaneNode = SCNNode(geometry: backgroundPlane)
+            backgroundPlaneNode.position = SCNVector3(x: 0, y: 0, z: 0)
 
-            let smokeInitialPosition = SCNVector3(
-                x: Float(CGFloat(0.25) * referenceImage.physicalSize.width),
-                y: Float(CGFloat(-0.11) * referenceImage.physicalSize.height),
-                z: 0
+            imagePlaneNode.addChildNode(backgroundPlaneNode)
+
+            // Fork
+
+            let forkPlane = SCNPlane(
+                width: referenceImage.physicalSize.width,
+                height: referenceImage.physicalSize.height
             )
 
-            let fadeInAction = SCNAction.fadeOpacity(to: initialSmokeOpacity, duration: 0.25)
+            let forkMaterial = SCNMaterial()
+            forkMaterial.lightingModel = .constant
+            forkMaterial.diffuse.contents = UIImage(named: "fork")
+            forkPlane.firstMaterial = forkMaterial
 
-            let leftAction = SCNAction.group([
-                .fadeOpacity(by: -0.10, duration: 0.25),
-                .moveBy(
-                    x: CGFloat(-0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
-                    z: 0.01,
-                    duration: 0.25
-                ),
-                .scale(by: 1.25, duration: 0.25),
-                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
-            ])
+            let forkInitialPosition = SCNVector3(x: 0, y: 0.04, z: 0.05)
+            let forkFinalPosition = SCNVector3(x: 0, y: 0, z: 0.01)
 
-            let rightAction = SCNAction.group([
-                .fadeOpacity(by: -0.10, duration: 0.25),
-                .moveBy(
-                    x: CGFloat(0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
-                    z: 0.01,
-                    duration: 0.25
-                ),
-                .scale(by: 1.25, duration: 0.25),
-                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
-            ])
+            let forkNode = SCNNode(geometry: forkPlane)
+            forkNode.position = forkInitialPosition
 
-            let leftFadeOutAction = SCNAction.group([
-                .fadeOpacity(to: 0, duration: 0.25),
-                .moveBy(
-                    x: CGFloat(-0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
-                    z: 0.01,
-                    duration: 0.25
-                ),
-                .scale(by: 1.25, duration: 0.25),
-                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
-            ])
+            let baseUnit = 0.25
 
-            let resetAction = SCNAction.group([
-                .move(to: smokeInitialPosition, duration: 0),
-                .scale(to: 1, duration: 0),
-                .rotateTo(x: 0, y: 0, z: 0, duration: 0),
-                .fadeOpacity(to: 0, duration: 0)
-            ])
-
-            let repeatingSequence = SCNAction.repeatForever(
-                .sequence([
-                    fadeInAction,
-                    rightAction,
-                    leftAction,
-                    rightAction,
-                    leftAction,
-                    rightAction,
-                    leftFadeOutAction,
-                    resetAction
-                ])
-            )
-
-            // Additional smoke
-
-            for i in 0 ..< 7 {
-                let moreSmokePlaneNode = SCNNode(geometry: smokePlane)
-                moreSmokePlaneNode.position = smokeInitialPosition
-                moreSmokePlaneNode.opacity = 0
-
-                moreSmokePlaneNode.runAction(.sequence([
-                    .wait(duration: 0.25 * Double(i)),
-                    repeatingSequence
+            forkNode.runAction(
+                .repeatForever(.sequence([
+                    .wait(duration: baseUnit),
+                    .move(to: forkFinalPosition, duration: baseUnit),
+                    .wait(duration: 4.0 * baseUnit),
+                    .move(to: forkInitialPosition, duration: baseUnit)
                 ]))
+            )
 
-                imagePlaneNode.addChildNode(moreSmokePlaneNode)
+            imagePlaneNode.addChildNode(forkNode)
+
+            // Electricity
+
+            for i in 1...4 {
+
+                let nodePlane = SCNPlane(
+                    width: referenceImage.physicalSize.width,
+                    height: referenceImage.physicalSize.height
+                )
+
+                let nodeMaterial = SCNMaterial()
+                nodeMaterial.lightingModel = .constant
+                nodeMaterial.diffuse.contents = UIImage(named: "s\(i)")
+                nodePlane.firstMaterial = nodeMaterial
+
+                let initialPosition = SCNVector3(x: 0, y: 0, z: 0.01)
+                let finalPosition = SCNVector3(x: 0, y: 0, z: 0.04)
+
+                let node = SCNNode(geometry: nodePlane)
+                node.position = initialPosition
+                node.opacity = 0
+
+                node.runAction(
+                    .group([
+                        .repeatForever(
+                            .sequence([
+                                .wait(duration: 2.0 * baseUnit),
+                                .fadeOpacity(to: 1, duration: baseUnit),
+                                .wait(duration: 3.0 * baseUnit),
+                                .fadeOpacity(to: 0, duration: baseUnit),
+                            ])
+                        ),
+                        .sequence([
+                            .wait(duration: baseUnit, withRange: baseUnit),
+                            .repeatForever(
+                                .sequence([
+                                    .move(to: finalPosition, duration: 0.5 * baseUnit),
+                                    .move(to: initialPosition, duration: 0.5 * baseUnit)
+                                ])
+                            )
+                        ])
+                    ])
+                )
+
+                imagePlaneNode.addChildNode(node)
+
             }
 
             // Add the plane visualization to the scene.
