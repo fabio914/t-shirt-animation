@@ -90,99 +90,83 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let imagePlaneNode = SCNNode()
             imagePlaneNode.eulerAngles.x = -.pi / 2
 
-            // Smoke
+            // UFO
 
-            let initialSmokeOpacity = 0.9
-
-            let smokePlane = SCNPlane(
+            let ufoPlane = SCNPlane(
                 width: 0.55 * referenceImage.physicalSize.width,
                 height: 0.55 * referenceImage.physicalSize.height
             )
 
-            let smokeMaterial = SCNMaterial()
-            smokeMaterial.lightingModel = .constant
-            smokeMaterial.diffuse.contents = UIImage(named: "smoke")
-            smokePlane.firstMaterial = smokeMaterial
+            let ufoMaterial = SCNMaterial()
+            ufoMaterial.lightingModel = .constant
+            ufoMaterial.diffuse.contents = UIImage(named: "ufo")
+            ufoPlane.firstMaterial = ufoMaterial
 
-            // Actions
-
-            let smokeInitialPosition = SCNVector3(
-                x: Float(CGFloat(0.25) * referenceImage.physicalSize.width),
-                y: Float(CGFloat(-0.11) * referenceImage.physicalSize.height),
-                z: 0
-            )
-
-            let fadeInAction = SCNAction.fadeOpacity(to: initialSmokeOpacity, duration: 0.25)
-
-            let leftAction = SCNAction.group([
-                .fadeOpacity(by: -0.10, duration: 0.25),
-                .moveBy(
-                    x: CGFloat(-0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
-                    z: 0.01,
-                    duration: 0.25
+            let initialPositions: [SCNVector3] = [
+                .init(
+                    0.4 * referenceImage.physicalSize.width,
+                    -1.0 * referenceImage.physicalSize.height,
+                    0.01
                 ),
-                .scale(by: 1.25, duration: 0.25),
-                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
-            ])
-
-            let rightAction = SCNAction.group([
-                .fadeOpacity(by: -0.10, duration: 0.25),
-                .moveBy(
-                    x: CGFloat(0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
-                    z: 0.01,
-                    duration: 0.25
+                .init(
+                    -0.4 * referenceImage.physicalSize.width,
+                    -1.0 * referenceImage.physicalSize.height,
+                    0.01
                 ),
-                .scale(by: 1.25, duration: 0.25),
-                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
-            ])
-
-            let leftFadeOutAction = SCNAction.group([
-                .fadeOpacity(to: 0, duration: 0.25),
-                .moveBy(
-                    x: CGFloat(-0.20) * referenceImage.physicalSize.width,
-                    y: CGFloat(0.40) * referenceImage.physicalSize.height,
-                    z: 0.01,
-                    duration: 0.25
+                .init(
+                    0.3 * referenceImage.physicalSize.width,
+                    -0.5 * referenceImage.physicalSize.height,
+                    0.01
                 ),
-                .scale(by: 1.25, duration: 0.25),
-                .rotateBy(x: 0, y: 0, z: .pi/10.0, duration: 0.25)
-            ])
+                .init(
+                    -0.3 * referenceImage.physicalSize.width,
+                     -0.5 * referenceImage.physicalSize.height,
+                    0.01
+                ),
+                .init(
+                    0.5 * referenceImage.physicalSize.width,
+                    -0.25 * referenceImage.physicalSize.height,
+                    0.01
+                ),
+                .init(
+                    -0.5 * referenceImage.physicalSize.width,
+                     -0.25 * referenceImage.physicalSize.height,
+                    0.01
+                )
+            ]
 
-            let resetAction = SCNAction.group([
-                .move(to: smokeInitialPosition, duration: 0),
-                .scale(to: 1, duration: 0),
-                .rotateTo(x: 0, y: 0, z: 0, duration: 0),
-                .fadeOpacity(to: 0, duration: 0)
-            ])
 
-            let repeatingSequence = SCNAction.repeatForever(
-                .sequence([
-                    fadeInAction,
-                    rightAction,
-                    leftAction,
-                    rightAction,
-                    leftAction,
-                    rightAction,
-                    leftFadeOutAction,
-                    resetAction
-                ])
-            )
+            for initialPosition in initialPositions {
+                let ufoNode = SCNNode(geometry: ufoPlane)
+                ufoNode.position = .init(0, 0, 0.05)
+                ufoNode.opacity = 1
 
-            // Additional smoke
+                ufoNode.runAction(
+                    .repeatForever(
+                        .sequence([
+                            .group([
+                                .move(to: initialPosition, duration: 0),
+                                .scale(to: 0, duration: 0),
+                                .fadeOpacity(to: 0, duration: 0)
+                            ]),
+                            .wait(duration: 0.25, withRange: 1.0),
+                            .group([
+                                .moveBy(x: 0, y: 0, z: 0.05, duration: 0.25),
+                                .fadeOpacity(to: 1.0, duration: 0.25),
+                                .scale(to: 1.0, duration: 0.25)
+                            ]),
+                            .moveBy(x: -0.1 * referenceImage.physicalSize.width, y: 0, z: 0.125, duration: 0.125),
+                            .moveBy(x: 0.2 * referenceImage.physicalSize.width, y: 0, z: 0.125, duration: 0.125),
+                            .moveBy(x: -0.2 * referenceImage.physicalSize.width, y: 0, z: 0.125, duration: 0.125),
+                            .moveBy(x: 0.2 * referenceImage.physicalSize.width, y: 0, z: 0.125, duration: 0.125),
+                            .moveBy(x: -0.2 * referenceImage.physicalSize.width, y: 0, z: 0.125, duration: 0.125),
+                            .moveBy(x: 0.1 * referenceImage.physicalSize.width, y: 0, z: 0.125, duration: 0.125),
+                            .fadeOpacity(to: 0, duration: 0.125)
+                        ])
+                    )
+                )
 
-            for i in 0 ..< 7 {
-                let moreSmokePlaneNode = SCNNode(geometry: smokePlane)
-                moreSmokePlaneNode.position = smokeInitialPosition
-                moreSmokePlaneNode.opacity = 0
-
-                moreSmokePlaneNode.runAction(.sequence([
-                    .wait(duration: 0.25 * Double(i)),
-                    repeatingSequence
-                ]))
-
-                imagePlaneNode.addChildNode(moreSmokePlaneNode)
+                imagePlaneNode.addChildNode(ufoNode)
             }
 
             // Add the plane visualization to the scene.
