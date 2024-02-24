@@ -1,0 +1,18 @@
+[
+    {
+        "guid": "Guid(10180214583793075010, 13085474825770890632)",
+        "nameKey": "component_camera"
+    },
+    {
+        "guid": "Guid(8235238043598186243, 16840308208679013795)",
+        "nameKey": "effect_node_utility"
+    },
+    {
+        "guid": "Guid(815069582473778930, 3860102513852982437)",
+        "nameKey": "component_directionallight"
+    },
+    {
+        "guid": "Guid(11406181728386468509, 5972158861532600762)",
+        "nameKey": "component_envlight"
+    }
+]

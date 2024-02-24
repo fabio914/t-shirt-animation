@@ -1,0 +1,62 @@
+{
+	"name": "Mod",
+	"id": "80267734-56d8-6dd5-11a3-59b797c3cbd6",
+	"inputs": [
+		{
+			"name": "A",
+			"type": "Double",
+			"item_type": "",
+			"dynamic": true,
+			"default_value": "0",
+			"description": "The dividend",
+			"displayType": "Number",
+			"nameKey": "graph_mod_input_a",
+			"descriptionKey": "graph_mod_input_a_description",
+			"displayTypeKey": "graph_type_number"
+		},
+		{
+			"name": "B",
+			"type": "Double",
+			"item_type": "",
+			"dynamic": true,
+			"default_value": "0",
+			"description": "The divisor",
+			"displayType": "Number",
+			"nameKey": "graph_mod_input_b",
+			"descriptionKey": "graph_mod_input_b_description",
+			"displayTypeKey": "graph_type_number"
+		}
+	],
+	"outputs": [
+		{
+			"name": "A%B",
+			"type": "Double",
+			"item_type": "",
+			"dynamic": true,
+			"description": "The remainder",
+			"displayType": "Number",
+			"nameKey": "graph_mod_output_ab",
+			"descriptionKey": "graph_mod_output_ab_description",
+			"displayTypeKey": "graph_type_number"
+		}
+	],
+	"lua": "CGMod.lua",
+	"js": "CGMod.js",
+	"version": "1.0.1",
+	"amazingVersion": "10.40.0",
+	"luaFuncName": "CGMod",
+	"category": "Math",
+	"description": "Calculate the remainder of division.",
+	"supportedValueTypes": [
+		"Double",
+		"Int"
+	],
+	"productTypes": [
+		"EHO",
+		"EHD",
+		"EHI"
+	],
+	"nameKey": "graph_mod_name",
+	"categoryKey": "graph_category_math",
+	"descriptionKey": "graph_mod_description"
+}

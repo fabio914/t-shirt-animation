@@ -1,0 +1,68 @@
+{
+	"name": "Multiply",
+	"id": "f3d04790-2405-2f1e-f847-d8fb322377c6",
+	"inputs": [
+		{
+			"name": "A",
+			"type": "Double",
+			"item_type": "",
+			"default_value": "1",
+			"dynamic": true,
+			"description": "The first value to multiply",
+			"displayType": "Number",
+			"nameKey": "graph_multiply_input_a",
+			"descriptionKey": "graph_multiply_input_a_description",
+			"displayTypeKey": "graph_type_number"
+		},
+		{
+			"name": "B",
+			"type": "Double",
+			"item_type": "",
+			"default_value": "1",
+			"dynamic": true,
+			"description": "The second value to multiply",
+			"displayType": "Number",
+			"nameKey": "graph_multiply_input_b",
+			"descriptionKey": "graph_multiply_input_b_description",
+			"displayTypeKey": "graph_type_number"
+		}
+	],
+	"outputs": [
+		{
+			"name": "A*B",
+			"type": "Double",
+			"item_type": "",
+			"dynamic": true,
+			"description": "The result of  multiplying",
+			"displayType": "Number",
+			"nameKey": "graph_multiply_output_ab",
+			"descriptionKey": "graph_multiply_output_ab_description",
+			"displayTypeKey": "graph_type_number"
+		}
+	],
+	"js": "CGMultiply.js",
+	"version": "1.0.1",
+	"amazingVersion": "10.40.0",
+	"category": "Math",
+	"description": "Multiply two values. You can click \"+\" to add more inputs. Supported types: Number, Vec2, Vec3, and Vec4.",
+	"supportedValueTypes": [
+		"Double",
+		"Int",
+		"Vector2f",
+		"Vector3f",
+		"Vector4f"
+	],
+	"addableInput": {
+		"index": 1,
+		"baseName": "",
+		"increaseStartIndex": "C"
+	},
+	"productTypes": [
+		"EHO",
+		"EHD",
+		"EHI"
+	],
+	"nameKey": "graph_multiply_name",
+	"categoryKey": "graph_category_math",
+	"descriptionKey": "graph_multiply_description"
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "guid": {
+      "a": "48c84c83-a20d-560d-52c3-3d323b067780",
+      "b": ""
+    },
+    "extraType": "ResItemMaterialOmtl",
+    "name": "RenderTextureMaterial (1)",
+    "expandInPanel": false,
+    "objGuid": "",
+    "rttiType": "Material",
+    "version": "0.4.0",
+    "isVisibleInInspector": true,
+    "hideInPanel": false,
+    "skinObjGuid": "Guid(14864067983564066455, 15276516168308278458)",
+    "references": [
+      {
+        "propertyName": "_AlbedoTexture",
+        "guid": "e5e24610-cc38-cf1f-c6f7-367307c35c12"
+      },
+      {
+        "propertyName": "_OpacityTexture",
+        "guid": "00000000-0000-0000-0000-000000000021"
+      }
+    ]
+  }
+]

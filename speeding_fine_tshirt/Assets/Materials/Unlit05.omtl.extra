@@ -1,0 +1,27 @@
+[
+  {
+    "guid": {
+      "a": "52b8f794-4b52-8198-e60e-9903e0e3171b",
+      "b": ""
+    },
+    "extraType": "ResItemMaterialOmtl",
+    "name": "Unlit05",
+    "expandInPanel": false,
+    "objGuid": "",
+    "rttiType": "Material",
+    "version": "0.4.0",
+    "isVisibleInInspector": true,
+    "hideInPanel": false,
+    "skinObjGuid": "Guid(958586700033617061, 3679251365477769603)",
+    "references": [
+      {
+        "propertyName": "_AlbedoTexture",
+        "guid": "4f820345-fd0a-931e-aa55-2e8e3dac847f"
+      },
+      {
+        "propertyName": "_OpacityTexture",
+        "guid": "00000000-0000-0000-0000-000000000021"
+      }
+    ]
+  }
+]

@@ -1,0 +1,49 @@
+%YAML 1.1
+--- !ScreenRenderTexture &1
+name: !<str> Render Texture (1)
+guid: {a: 16088669070688811037, b: 2636077981008573320}
+width: 720
+height: 1280
+depth: 0
+internalFormat:
+  __class: InternalFormat
+  value: RGBA8
+dataType:
+  __class: DataType
+  value: U8norm
+builtinType:
+  __class: BuiltInTextureType
+  value: NORAML
+enableMipmap: false
+filterMin:
+  __class: FilterMode
+  value: LINEAR
+filterMag:
+  __class: FilterMode
+  value: LINEAR
+filterMipmap:
+  __class: FilterMipmapMode
+  value: NONE
+wrapModeS:
+  __class: WrapMode
+  value: CLAMP
+wrapModeT:
+  __class: WrapMode
+  value: CLAMP
+wrapModeR:
+  __class: WrapMode
+  value: CLAMP
+maxAnisotropy: 1
+attachment:
+  __class: RenderTextureAttachment
+  value: DEPTH24
+inputTexture: {localId: 1, path: share://input.texture}
+massMode:
+  __class: MSAAMode
+  value: NONE
+shared: false
+colorFormat:
+  __class: PixelFormat
+  value: RGBA8Unorm
+pecentX: 1
+pecentY: 1
