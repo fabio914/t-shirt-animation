@@ -1,0 +1,116 @@
+{
+	"name": "Combine",
+	"id": "da895c0a-894c-f23b-a341-8ab1aeafafd1",
+	"description": "Pack inputs into a vector or color data. The number of inputs depends on the selected data type. And the outputs are in the same order as they were inputted. Supported types: Vec2, Vec3, Vec4, and Color.",
+	"inputChangeFollowOutput": [
+		{
+			"outputKey": "Vector2f",
+			"inputNames": [
+				"X",
+				"Y"
+			],
+			"inputTypes": [
+				"Double",
+				"Double"
+			],
+			"inputDescriptions": [
+				"Number to pack",
+				"Number to pack"
+			]
+		},
+		{
+			"outputKey": "Vector3f",
+			"inputNames": [
+				"X",
+				"Y",
+				"Z"
+			],
+			"inputTypes": [
+				"Double",
+				"Double",
+				"Double"
+			],
+			"inputDescriptions": [
+				"Number to pack",
+				"Number to pack",
+				"Number to pack"
+			]
+		},
+		{
+			"outputKey": "Vector4f",
+			"inputNames": [
+				"X",
+				"Y",
+				"Z",
+				"W"
+			],
+			"inputTypes": [
+				"Double",
+				"Double",
+				"Double",
+				"Double"
+			],
+			"inputDescriptions": [
+				"Number to pack",
+				"Number to pack",
+				"Number to pack",
+				"Number to pack"
+			]
+		},
+		{
+			"outputKey": "Color",
+			"inputNames": [
+				"R",
+				"G",
+				"B",
+				"A"
+			],
+			"inputTypes": [
+				"Double",
+				"Double",
+				"Double",
+				"Double"
+			],
+			"inputDescriptions": [
+				"Number to pack",
+				"Number to pack",
+				"Number to pack",
+				"Number to pack"
+			]
+		}
+	],
+	"inputs": [],
+	"outputs": [
+		{
+			"name": "Output",
+			"type": "Vector2f",
+			"item_type": "",
+			"dynamic": true,
+			"description": "The output vector",
+			"displayType": "Vec2",
+			"nameKey": "graph_combine_output_output",
+			"descriptionKey": "graph_combine_output_output_description",
+			"displayTypeKey": "graph_type_vec2"
+		}
+	],
+	"lua": "CGPackNode.lua",
+	"js": "CGPackNode.js",
+	"luaFuncName": "CGPackNode",
+	"category": "Utility",
+	"supportedValueTypes": [
+		"Vector2f",
+		"Vector3f",
+		"Vector4f",
+		"Color"
+	],
+	"productTypes": [
+		"EHO",
+		"EHD",
+		"EHI"
+	],
+	"version": "1.0.1",
+	"onlineWebsite": "graph_combine_website",
+	"nameKey": "graph_combine_name",
+	"categoryKey": "graph_category_utility",
+	"descriptionKey": "graph_combine_description"
+}

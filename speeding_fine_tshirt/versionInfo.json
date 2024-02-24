@@ -1,0 +1,15 @@
+{
+  "version": "3.7.2",
+  "handlers": {
+    "ComponentsCompatibilityHandler": {
+      "Transform": "85bfce2f4ffa628888c59a61f15d5b51",
+      "EffectNode": "d751713988987e9331980363e24189ce",
+      "TargetTrackingJS": "cbef605ab3efb0fc801aaf8c387d0f94",
+      "Camera": "8e55c3cc4ccbe0b02971fcd64010eb00",
+      "TargetTrackingCameraJS": "d751713988987e9331980363e24189ce",
+      "ScreenTransform": "8cc92252abf32837f581e72617dc5388",
+      "Image": "e1045c6167efec3158b76a730d390114",
+      "MeshRenderer": "0ed8ea86d5371c8bbe2ea5908543a838"
+    }
+  }
+}

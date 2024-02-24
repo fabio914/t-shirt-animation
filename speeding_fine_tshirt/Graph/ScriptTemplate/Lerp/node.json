@@ -1,0 +1,72 @@
+{
+	"name": "Lerp",
+	"id": "aac82bad-208a-7eb8-e5db-7dcced7fa267",
+	"inputs": [
+		{
+			"name": "Start",
+			"type": "Double",
+			"item_type": "",
+			"dynamic": true,
+			"description": "The lower bound of the range",
+			"displayType": "Number",
+			"nameKey": "graph_lerp_input_start",
+			"descriptionKey": "graph_lerp_input_start_description",
+			"displayTypeKey": "graph_type_number"
+		},
+		{
+			"name": "Stop",
+			"type": "Double",
+			"item_type": "",
+			"dynamic": true,
+			"description": "The upper bound of the range",
+			"displayType": "Number",
+			"nameKey": "graph_lerp_input_stop",
+			"descriptionKey": "graph_lerp_input_stop_description",
+			"displayTypeKey": "graph_type_number"
+		},
+		{
+			"name": "Step",
+			"type": "Double",
+			"item_type": "",
+			"dynamic": false,
+			"description": "The value used to interpolate between Start and Stop. Value range: 0 to 1.",
+			"displayType": "Number",
+			"nameKey": "graph_lerp_input_step",
+			"descriptionKey": "graph_lerp_input_step_description",
+			"displayTypeKey": "graph_type_number"
+		}
+	],
+	"outputs": [
+		{
+			"name": "Result",
+			"type": "Double",
+			"item_type": "",
+			"dynamic": true,
+			"description": "The linear interpolation of Step between Start and Stop. When Step = 0, the result is Start, when Step = 1, the result is Stop.",
+			"displayType": "Number",
+			"nameKey": "graph_lerp_output_result",
+			"descriptionKey": "graph_lerp_output_result_description",
+			"displayTypeKey": "graph_type_number"
+		}
+	],
+	"js": "CGLerp.js",
+	"version": "2.0.0",
+	"amazingVersion": "10.40.0",
+	"category": "Math",
+	"description": "Linearly interpolate a value within a range. Supported types: Number, Vec2, Vec3 and Color.",
+	"supportedValueTypes": [
+		"Double",
+		"Vector2f",
+		"Vector3f",
+		"Color"
+	],
+	"productTypes": [
+		"EHO",
+		"EHD",
+		"EHI"
+	],
+	"onlineWebsite": "graph_lerp_website",
+	"nameKey": "graph_lerp_name",
+	"categoryKey": "graph_category_math",
+	"descriptionKey": "graph_lerp_description"
+}
