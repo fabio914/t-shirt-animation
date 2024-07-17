@@ -46,20 +46,47 @@ final class SceneManager: ObservableObject {
                 let referenceImage = anchor.referenceImage
                 let parentEntity = Entity()
 
-                var material = UnlitMaterial()
-                material.color = .init(tint: .white.withAlphaComponent(0.9999), texture: .init(textureResource))
+                let numberOfSmoke = 3
 
-                let width = Float(0.55 * referenceImage.physicalSize.width)
-                let depth = Float(0.55 * referenceImage.physicalSize.height)
+                for smokeIndex in 0 ..< numberOfSmoke {
+                    var material = SimpleMaterial()
+                    material.color = .init(tint: .white.withAlphaComponent(0.999), texture: .init(textureResource))
 
-                let smokeEntity = ModelEntity(mesh: .generatePlane(width: width, depth: depth), materials: [material])
-                smokeEntity.position = .init(
-                    x: Float(0.25 * referenceImage.physicalSize.width),
-                    y: Float(-0.11 * referenceImage.physicalSize.height),
-                    z: 0
-                )
+                    let width = Float(0.55 * referenceImage.physicalSize.width)
+                    let depth = Float(0.55 * referenceImage.physicalSize.height)
 
-                parentEntity.addChild(smokeEntity)
+                    let smokeEntity = ModelEntity(mesh: .generatePlane(width: width, depth: depth), materials: [material])
+                    smokeEntity.position = .init(
+                        x: Float(0.25 * referenceImage.physicalSize.width),
+                        y: Float(-0.11 * referenceImage.physicalSize.height),
+                        z: 0
+                    )
+
+                    smokeEntity.components[OpacityComponent.self] = .init(opacity: 0.75)
+
+                    parentEntity.addChild(smokeEntity)
+
+                    // TEST ANIMATION
+                    let duration = 1.0
+                    let delay = (duration/Double(numberOfSmoke)) * Double(smokeIndex)
+
+                    var transform = smokeEntity.transform
+                    transform.translation = [0.05, 0.10 , -0.20]
+                    let translateAnimation = FromToByAnimation(to: transform, duration: duration, bindTarget: .transform)
+
+                    let opacityAnimation = FromToByAnimation(to: 0.0, duration: duration, bindTarget: .opacity) // <<< This is not working....
+
+                    let animationGroup = AnimationGroup(group: [
+                        opacityAnimation,
+                        translateAnimation
+                    ], repeatMode: .repeat, delay: delay)
+
+                    // Generate an AnimationResource from the AnimationViewDefinition
+                    let animationResource = try! AnimationResource.generate(with: animationGroup)
+
+                    smokeEntity.playAnimation(animationResource)
+                    // END TEST ANIMATION
+                }
 
                 entityMap[anchor.id] = parentEntity
                 rootEntity.addChild(parentEntity)
